@@ -1,15 +1,20 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "supabase/index.js",
-        "use": "@vercel/node"
-      }
+        {
+            "src": "supabase/index.js",
+            "use": "@vercel/node",
+            "config": {
+                "includeFiles": [
+                    "supabase/**"
+                ]
+            }
+        }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
     ]
-  }
+}
