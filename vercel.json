@@ -9,12 +9,20 @@
                     "supabase/**"
                 ]
             }
+        },
+        {
+            "src": "public/client_side/**",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
+            "src": "/api/(.*)",
+            "dest": "supabase/index.js"
+        },
+        {
             "src": "/(.*)",
-            "dest": "/"
+            "dest": "public/client_side/$1"
         }
     ]
 }

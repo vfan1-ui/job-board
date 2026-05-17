@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const supabaseClient = require('@supabase/supabase-js');
 const dotenv = require('dotenv');
-dotenv.config()
+const cors = require('cors');
+const { parse } = require('node-html-parser');
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -32,7 +33,8 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-app.get('/users', async (req, res) => {
+//grab all users
+app.get('/api/users', async (req, res) => {
     console.log('Attempting to get all users');
 
     const { data, error } = await supabase.from('users').select();
@@ -46,23 +48,23 @@ app.get('/users', async (req, res) => {
     res.json(data);
 });
 
-app.post('/user', async (req, res) => {
+// add a new user/subscriber
+app.post('/api/user', async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
-    const state = req.body.state;
-
     const email = req.body.email;
+    const state = req.body.state;
 
     if (!firstName || !lastName || !email || !state) {
         return res.status(400).json({ error: 'firstName, lastName, email and state are required' });
     }
 
-    if (!isValidState(state)) {
-        return res.status(400).json({ error: 'Invalid state. Please use a valid US state abbreviation e.g. NY, CA, TX' });
-    }
-
     if (!isValidEmail(email)) {
         return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    if (!isValidState(state)) {
+        return res.status(400).json({ error: 'Invalid state. Please use a valid US state abbreviation e.g. NY, CA, TX' });
     }
 
     const { data, error } = await supabase
@@ -84,35 +86,34 @@ app.post('/user', async (req, res) => {
     res.status(201).json(data);
 });
 
-app.listen(port, () => {
-    console.log('App is available through port:', port);
-});
-
-// Fetching the Job Board API 
-const { parse } = require('node-html-parser');
-
-app.get('/jobs', async (req, res) => {
+// fetch job listings 
+app.get('/api/jobs', async (req, res) => {
     console.log('Fetching jobs');
 
-    const response = await fetch('https://jobicy.com/feed/job_feed?job_categories=supporting&job_types=full-time&search_region=usa');
-    const xml = await response.text();
-    const root = parse(xml);
+    try {
+        const response = await fetch('https://jobicy.com/feed/job_feed?job_categories=supporting&job_types=full-time&search_region=usa');
+        const xml = await response.text();
+        const root = parse(xml);
 
-    const items = root.querySelectorAll('item');
+        const items = root.querySelectorAll('item');
 
-    const jobs = items.map(item => ({
-        title: item.querySelector('title')?.textContent || '',
-        company: item.querySelector('company')?.textContent || '',
-        location: item.querySelector('location')?.textContent || '',
-        description: item.querySelector('description')?.textContent || '',
-        link: item.querySelector('link')?.textContent || '',
-    }));
+        const jobs = items.map(item => ({
+            title: item.querySelector('title')?.textContent || '',
+            company: item.querySelector('job_listing_company_name')?.textContent || '',
+            location: item.querySelector('job_listing_region')?.textContent || '',
+            description: item.querySelector('description')?.textContent || '',
+            link: item.querySelector('guid')?.textContent || '',
+        }));
 
-    res.json(jobs);
+        res.json(jobs);
+    } catch (err) {
+        console.error('Jobs fetch error:', err);
+        res.status(500).json({ error: 'Failed to fetch jobs' });
+    }
 });
 
-// GET /holidays — fetches US public holidays from Nager.Date
-app.get('/holidays', async (req, res) => {
+//fetch next  US public holiday for the current year
+app.get('/api/holidays', async (req, res) => {
     try {
         const year = new Date().getFullYear();
         const response = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/US`);
@@ -124,15 +125,18 @@ app.get('/holidays', async (req, res) => {
     }
 });
 
-
-// GET /quote — fetches a random inspirational quote from ZenQuotes
-app.get('/quote', async (req, res) => {
+//fetch a random inspirational quote
+app.get('/api/quote', async (req, res) => {
     try {
         const response = await fetch('https://zenquotes.io/api/random');
         const data = await response.json();
-        res.json(data[0]); // returns { q: "quote text", a: "author" }
+        res.json(data[0]);
     } catch (err) {
         console.error('Quote fetch error:', err);
         res.status(500).json({ error: 'Failed to fetch quote' });
     }
+});
+
+app.listen(port, () => {
+    console.log('App is available through port:', port);
 });
