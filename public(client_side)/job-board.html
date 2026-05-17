@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrangeDot — Job Board</title>
+    <link rel="stylesheet" href="job-board.css">
+    <!-- noUiSlider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js" defer></script>
+    <script src="client-side-functions.js" defer></script>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">OrangeDot</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="job-board.html">Job Board</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Job Board</h1>
+        <p>Full-time remote roles across the USA, updated daily.</p>
+    </div>
+
+    <div class="controls">
+        <div class="slider-wrapper">
+            <label>Jobs to display: <span id="sliderValue">10</span></label>
+            <div id="jobSlider"></div>
+        </div>
+    </div>
+
+    <div class="job-container">
+        <div id="spinner" class="spinner-wrapper">
+            <div class="spinner"></div>
+            <p>Finding jobs for you...</p>
+        </div>
+        <div id="jobList"></div>
+    </div>
+
+    <footer>
+        <p>© 2026 OrangeDot. Built for job seekers across the USA.</p>
+    </footer>
+
+</body>
+</html>

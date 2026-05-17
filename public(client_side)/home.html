@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrangeDot — Find Your Next Role</title>
+    <link rel="stylesheet" href="home.css">
+    <!-- Splide.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" defer></script>
+    <script src="client-side-functions.js" defer></script>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-logo">OrangeDot</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="job-board.html">Job Board</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Holiday Banner -->
+    <div class="holiday-banner" id="holidayBanner">
+        🎉 Loading next holiday...
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Find Work<br>That <span class="accent">Works</span><br>For You.</h1>
+            <p>Find full-time roles across the USA from any (o)range.</p>
+            <a href="job-board.html" class="btn-primary">Browse Jobs →</a>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="quote-card">
+            <p class="quote-text" id="quoteText">Loading inspiration...</p>
+            <p class="quote-author" id="quoteAuthor"></p>
+        </div>
+    </section>
+
+    <!-- Splide Slider -->
+    <section class="slider-section">
+        <h2>Work for Big Companies!</h2>
+        <div class="splide" id="workSlider">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/cvs.png" alt="CVS Health" /><span>CVS Health</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/zillow.png" alt="Zillow" /><span>Zillow</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/doordash.png" alt="DoorDash" /><span>DoorDash</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/hubspot.png" alt="HubSpot" /><span>HubSpot</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/pearson.png" alt="Pearson" /><span>Pearson</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/amazon.png" alt="Amazon" /><span>Amazon</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/citizens.png" alt="Citizens" /><span>Citizens</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/progressive.png" alt="Progressive" /><span>Progressive</span></div></li>
+                    <li class="splide__slide"><div class="logo-slide"><img src="logos/google.png" alt="Google" /><span>Google</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter-section">
+        <div class="newsletter-card">
+            <h2>Stay in the Loop</h2>
+            <p>Sign up to receive curated job opportunities straight to your inbox.</p>
+            <form id="userForm">
+                <div class="form-row">
+                    <input type="text" id="firstName" placeholder="First Name" />
+                    <input type="text" id="lastName" placeholder="Last Name" />
+                </div>
+                <input type="email" id="email" placeholder="Email Address" />
+                <input type="text" id="state" placeholder="State (e.g. NY, CA, TX)" />
+                <button type="button" onclick="submitUser()">Sign Up for Newsletter</button>
+            </form>
+            <p id="successMessage" style="display:none; color: #2e7d32; margin-top: 1rem;">✅ You're signed up!</p>
+            <p id="errorMessage" style="display:none; color: #c62828; margin-top: 1rem;"></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 OrangeDot. Built for job seekers across the USA.</p>
+    </footer>
+
+</body>
+</html>
