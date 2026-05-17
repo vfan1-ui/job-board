@@ -21,6 +21,10 @@
             "dest": "supabase/index.js"
         },
         {
+            "src": "/",
+            "dest": "public/client_side/home.html"
+        },
+        {
             "src": "/(.*)",
             "dest": "public/client_side/$1"
         }
