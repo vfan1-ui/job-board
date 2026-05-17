@@ -11,7 +11,7 @@
             }
         },
         {
-            "src": "public(client_side)/**",
+            "src": "public/**",
             "use": "@vercel/static"
         }
     ],
@@ -22,11 +22,11 @@
         },
         {
             "src": "/",
-            "dest": "public(client_side)/home.html"
+            "dest": "public/home.html"
         },
         {
             "src": "/(.*)",
-            "dest": "public(client_side)/$1"
+            "dest": "public/$1"
         }
     ]
 }
